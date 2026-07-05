@@ -3,8 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Portfolio d'Adji Seynabou Sambe, développeuse intégratrice web full stack basée à Dakar, spécialisée en web, mobile, plateformes santé numérique et IA." />
+  <meta name="author" content="Adji Seynabou Sambe" />
+  <meta name="theme-color" content="#0e7c7b" />
+  <meta property="og:title" content="Adji Seynabou Sambe — Portfolio" />
+  <meta property="og:description" content="Développeuse intégratrice web full stack à Dakar: web, mobile, santé numérique et IA." />
+  <meta property="og:type" content="website" />
   <title>Adji Seynabou Sambe — Portfolio</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <script>document.documentElement.classList.add('js');</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&amp;family=DM+Sans:wght@300;400;500&amp;family=Space+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
   <style>
     :root {
       --teal:       #0e7c7b;
@@ -16,6 +25,8 @@
       --accent:     #e8533a;
       --gold:       #c9a84c;
       --text:       #2a3535;
+      --shadow:     0 20px 50px rgba(14,124,123,.14);
+      --nav-height: 74px;
     }
 
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
@@ -23,11 +34,36 @@
     html { scroll-behavior: smooth; }
 
     body {
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: var(--cream);
       color: var(--text);
       overflow-x: hidden;
+      line-height: 1.5;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
     }
+
+    a, button, input, textarea { font: inherit; }
+
+    :focus-visible {
+      outline: 3px solid rgba(232,83,58,.75);
+      outline-offset: 4px;
+    }
+
+    .skip-link {
+      position:fixed;
+      top:.75rem;
+      left:.75rem;
+      z-index:200;
+      padding:.7rem 1rem;
+      background:var(--dark);
+      color:#fff;
+      text-decoration:none;
+      transform:translateY(-150%);
+      transition:transform .2s ease;
+    }
+
+    .skip-link:focus { transform:translateY(0); }
 
     /* ── NAV ── */
     nav {
@@ -35,8 +71,13 @@
       display:flex; align-items:center; justify-content:space-between;
       padding: 1.1rem 4rem;
       background: rgba(248,244,239,0.92);
+      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(14,124,123,0.12);
+    }
+
+    @supports not ((backdrop-filter: blur(10px)) or (-webkit-backdrop-filter: blur(10px))) {
+      nav { background: rgba(248,244,239,0.98); }
     }
     .nav-logo {
       font-family: 'Space Mono', monospace;
@@ -44,6 +85,7 @@
       color: var(--teal);
       letter-spacing: .1em;
       text-transform: uppercase;
+      text-decoration:none;
     }
     .nav-links { display:flex; gap:2.5rem; list-style:none; }
     .nav-links a {
@@ -60,6 +102,7 @@
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
+      min-height: 100svh;
       display: grid;
       grid-template-columns: 1fr 1fr;
       align-items: center;
@@ -162,6 +205,7 @@
 
     .profile-card {
       width:340px;
+      max-width:100%;
       background:#fff;
       border-radius:4px;
       overflow:hidden;
@@ -226,8 +270,19 @@
     }
 
     /* ── SECTION COMMONS ── */
-    section { padding:5rem 4rem; }
-    section:nth-child(even) { background:#fff; }
+    section {
+      padding:5rem 4rem;
+      scroll-margin-top: calc(var(--nav-height) + 1.5rem);
+    }
+    main > section:nth-of-type(odd) { background:#fff; }
+    main > section:not(.hero) {
+      content-visibility:auto;
+      contain-intrinsic-size:1px 720px;
+    }
+    main > section:not(.hero) > * {
+      max-width:1180px;
+      margin-inline:auto;
+    }
 
     .section-label {
       font-family:'Space Mono',monospace;
@@ -288,10 +343,14 @@
     }
     .skill-fill {
       height:100%;
+      width:var(--level);
       background:linear-gradient(90deg, var(--teal), var(--teal-light));
       border-radius:2px;
       transform-origin:left;
-      animation:fillBar 1.2s ease forwards;
+      transform:scaleX(1);
+    }
+    .js .skill-fill {
+      animation:fillBar 1.2s ease forwards paused;
       transform:scaleX(0);
     }
     @keyframes fillBar { to { transform:scaleX(1); } }
@@ -370,9 +429,11 @@
       transition:transform .3s, box-shadow .3s;
       cursor:default;
     }
-    .project-card:hover {
-      transform:translateY(-6px);
-      box-shadow:0 20px 50px rgba(14,124,123,.14);
+    @media (hover:hover) {
+      .project-card:hover {
+        transform:translateY(-6px);
+        box-shadow:var(--shadow);
+      }
     }
 
     .project-preview {
@@ -414,6 +475,18 @@
       background:var(--teal-pale);
       color:var(--teal);
       letter-spacing:.04em;
+    }
+
+    .certifications { margin-top:3rem; }
+    .certification-list {
+      display:flex;
+      flex-wrap:wrap;
+      gap:.8rem;
+      margin-top:1rem;
+    }
+    .certification-list .tag {
+      font-size:.78rem;
+      padding:.4rem 1rem;
     }
 
     .project-title {
@@ -522,6 +595,11 @@
     .form-group input:focus,
     .form-group textarea:focus { border-color:var(--teal); }
     .form-group textarea { resize:vertical; min-height:120px; }
+    .form-status {
+      min-height:1.4rem;
+      color:var(--teal);
+      font-size:.88rem;
+    }
 
     .form-submit {
       align-self:flex-start;
@@ -551,32 +629,85 @@
 
     /* ── RESPONSIVE ── */
     @media(max-width:900px) {
-      nav { padding:1rem 1.5rem; }
-      .hero { grid-template-columns:1fr; padding:7rem 1.5rem 3rem; gap:3rem; }
+      :root { --nav-height: 112px; }
+      nav {
+        align-items:flex-start;
+        flex-direction:column;
+        gap:.75rem;
+        padding:.85rem 1.25rem;
+      }
+      .nav-links {
+        display:flex;
+        gap:.9rem;
+        width:100%;
+        overflow-x:auto;
+        padding-bottom:.2rem;
+        -webkit-overflow-scrolling:touch;
+        scrollbar-width:none;
+      }
+      .nav-links::-webkit-scrollbar { display:none; }
+      .nav-links a {
+        white-space:nowrap;
+        font-size:.76rem;
+      }
+      .hero { grid-template-columns:1fr; min-height:auto; padding:9rem 1.5rem 3rem; gap:3rem; }
       .hero-visual { display:none; }
       section { padding:4rem 1.5rem; }
       .projects-grid { grid-template-columns:1fr; }
       .contact-wrapper { grid-template-columns:1fr; gap:2rem; }
-      .nav-links { display:none; }
+    }
+
+    @media(max-width:560px) {
+      .hero { padding-inline:1.1rem; }
+      h1.hero-name { font-size:clamp(2.55rem, 15vw, 3.6rem); }
+      .hero-cta { gap:.8rem; }
+      .btn-primary,
+      .btn-outline,
+      .form-submit {
+        width:100%;
+        justify-content:center;
+      }
+      .skills-grid,
+      .edu-grid { grid-template-columns:1fr; }
+      .timeline { padding-left:1.25rem; }
+      .timeline-item { padding-left:1.25rem; }
+      .timeline-item::before { left:-1.25rem; }
+      footer { padding-inline:1.25rem; }
     }
 
     /* ── SCROLL REVEAL ── */
     .reveal {
+      opacity:1;
+      transform:none;
+    }
+    .js .reveal {
       opacity:0;
       transform:translateY(24px);
       transition:opacity .65s ease, transform .65s ease;
     }
-    .reveal.visible {
+    .js .reveal.visible {
       opacity:1;
       transform:none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        scroll-behavior:auto !important;
+        transition-duration:.01ms !important;
+      }
+      .js .reveal,
+      .js .skill-fill { opacity:1; transform:none; }
     }
   </style>
 </head>
 <body>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
 
 <!-- NAV -->
-<nav>
-  <div class="nav-logo">Adji S. Sambe</div>
+<nav aria-label="Navigation principale">
+  <a class="nav-logo" href="#accueil" aria-label="Accueil - Adji Seynabou Sambe">Adji S. Sambe</a>
   <ul class="nav-links">
     <li><a href="#competences">Compétences</a></li>
     <li><a href="#experience">Expérience</a></li>
@@ -586,11 +717,12 @@
   </ul>
 </nav>
 
+<main id="contenu">
 <!-- HERO -->
-<section class="hero" id="accueil">
+<section class="hero" id="accueil" aria-labelledby="titre-accueil">
   <div class="hero-text">
     <div class="hero-eyebrow">Développeuse · Intégratrice Web</div>
-    <h1 class="hero-name">
+    <h1 class="hero-name" id="titre-accueil">
       Adji<br><em>Seynabou</em><br>Sambe
     </h1>
     <p class="hero-title">Full Stack · Mobile · Web</p>
@@ -637,62 +769,62 @@
 </section>
 
 <!-- COMPÉTENCES -->
-<section id="competences">
+<section id="competences" aria-labelledby="titre-competences">
   <div class="section-label">01 — Compétences</div>
-  <h2 class="section-title">Stack <em>technique</em></h2>
+  <h2 class="section-title" id="titre-competences">Stack <em>technique</em></h2>
 
   <div class="skills-grid">
     <div class="skill-item reveal">
       <div class="skill-name">PHP / Laravel</div>
-      <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+      <div class="skill-bar" aria-hidden="true"><div class="skill-fill" style="--level:85%"></div></div>
     </div>
-  <div class="skill-item reveal">
-      <div class="skill-name">HTML/CSS</div>
-      <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+    <div class="skill-item reveal">
+      <div class="skill-name">HTML / CSS</div>
+      <div class="skill-bar" aria-hidden="true"><div class="skill-fill" style="--level:85%"></div></div>
     </div>
     <div class="skill-item reveal">
       <div class="skill-name">JavaScript</div>
-     <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+      <div class="skill-bar" aria-hidden="true"><div class="skill-fill" style="--level:80%"></div></div>
     </div>
     <div class="skill-item reveal">
       <div class="skill-name">Bootstrap</div>
-      <div class="skill-bar"><div class="skill-fill" style="width:88%"></div></div>
+      <div class="skill-bar" aria-hidden="true"><div class="skill-fill" style="--level:88%"></div></div>
     </div>
     <div class="skill-item reveal">
       <div class="skill-name">Flutter / FlutterFlow</div>
-      <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+      <div class="skill-bar" aria-hidden="true"><div class="skill-fill" style="--level:80%"></div></div>
     </div>
     <div class="skill-item reveal">
       <div class="skill-name">API REST</div>
-      <div class="skill-bar"><div class="skill-fill" style="width:82%"></div></div>
+      <div class="skill-bar" aria-hidden="true"><div class="skill-fill" style="--level:82%"></div></div>
     </div>
     <div class="skill-item reveal">
       <div class="skill-name">MySQL / Supabase</div>
-      <div class="skill-bar"><div class="skill-fill" style="width:78%"></div></div>
+      <div class="skill-bar" aria-hidden="true"><div class="skill-fill" style="--level:78%"></div></div>
     </div>
     <div class="skill-item reveal">
       <div class="skill-name">Cloud Computing</div>
-      <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+      <div class="skill-bar" aria-hidden="true"><div class="skill-fill" style="--level:70%"></div></div>
     </div>
     <div class="skill-item reveal">
       <div class="skill-name">Méthodologie Agile</div>
-      <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+      <div class="skill-bar" aria-hidden="true"><div class="skill-fill" style="--level:85%"></div></div>
     </div>
     <div class="skill-item reveal">
       <div class="skill-name">Marketing Digital</div>
-      <div class="skill-bar"><div class="skill-fill" style="width:72%"></div></div>
+      <div class="skill-bar" aria-hidden="true"><div class="skill-fill" style="--level:72%"></div></div>
     </div>
-     <div class="skill-item reveal">
+    <div class="skill-item reveal">
       <div class="skill-name">Frameworks</div>
-      <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+      <div class="skill-bar" aria-hidden="true"><div class="skill-fill" style="--level:80%"></div></div>
     </div>
   </div>
 </section>
 
 <!-- EXPERIENCE -->
-<section id="experience">
+<section id="experience" aria-labelledby="titre-experience">
   <div class="section-label">02 — Expérience</div>
-  <h2 class="section-title">Parcours <em>professionnel</em></h2>
+  <h2 class="section-title" id="titre-experience">Parcours <em>professionnel</em></h2>
 
   <div class="timeline">
     <div class="timeline-item reveal">
@@ -738,14 +870,14 @@
 </section>
 
 <!-- PROJETS -->
-<section id="projets">
+<section id="projets" aria-labelledby="titre-projets">
   <div class="section-label">03 — Projets</div>
-  <h2 class="section-title">Réalisations <em>marquantes</em></h2>
+  <h2 class="section-title" id="titre-projets">Réalisations <em>marquantes</em></h2>
 
   <div class="projects-grid">
-    <div class="project-card reveal">
+    <article class="project-card reveal">
       <div class="project-preview sensante">
-        <div class="project-icon">🏥</div>
+        <div class="project-icon" aria-hidden="true">🏥</div>
       </div>
       <div class="project-body">
         <div class="project-tags">
@@ -753,16 +885,16 @@
           <span class="tag">Laravel</span>
           <span class="tag">Supabase</span>
         </div>
-        <div class="project-title">Application Mobile SENSANTÉ</div>
+        <h3 class="project-title">Application Mobile SENSANTÉ</h3>
         <p class="project-desc">
           Plateforme de santé mobile permettant aux patients de localiser des cliniques, hôpitaux, cabinets et pharmacies à proximité. Prise de rendez-vous en quelques clics. Développée pour Sen Santé.
         </p>
       </div>
-    </div>
+    </article>
 
-    <div class="project-card reveal">
+    <article class="project-card reveal">
       <div class="project-preview hopital">
-        <div class="project-icon">🌐</div>
+        <div class="project-icon" aria-hidden="true">🌐</div>
       </div>
       <div class="project-body">
         <div class="project-tags">
@@ -770,16 +902,16 @@
           <span class="tag">HTML/CSS</span>
           <span class="tag">JS</span>
         </div>
-        <div class="project-title">Site Web — CHU Abass NDAO</div>
+        <h3 class="project-title">Site Web — CHU Abass NDAO</h3>
         <p class="project-desc">
           Conception et développement du site web dynamique du Centre Hospitalier Abass NDAO. Présentation des services, informations aux patients et gestion du contenu.
         </p>
       </div>
-    </div>
+    </article>
 
-    <div class="project-card reveal">
+    <article class="project-card reveal">
       <div class="project-preview crm">
-        <div class="project-icon">💼</div>
+        <div class="project-icon" aria-hidden="true">💼</div>
       </div>
       <div class="project-body">
         <div class="project-tags">
@@ -787,16 +919,16 @@
           <span class="tag">E-commerce</span>
           <span class="tag">Bootstrap</span>
         </div>
-        <div class="project-title">CRM & Boutique en ligne — Géo Team</div>
+        <h3 class="project-title">CRM & Boutique en ligne — Géo Team</h3>
         <p class="project-desc">
           Intégration des pages d'un CRM sur mesure, mise en place d'une boutique en ligne et développement du site web institutionnel pour le Group Géo Team.
         </p>
       </div>
-    </div>
+    </article>
 
-    <div class="project-card reveal">
+    <article class="project-card reveal">
       <div class="project-preview sfad">
-        <div class="project-icon">🩺</div>
+        <div class="project-icon" aria-hidden="true">🩺</div>
       </div>
       <div class="project-body">
         <div class="project-tags">
@@ -804,19 +936,19 @@
           <span class="tag">Digital</span>
           <span class="tag">Santé</span>
         </div>
-        <div class="project-title">Portail SFAD — Diabétologie</div>
+        <h3 class="project-title">Portail SFAD — Diabétologie</h3>
         <p class="project-desc">
           Administration du portail web de la Société Francophone Africaine de Diabétologie et d'Endocrinologie. Conseil en stratégie digitale et communication médicale.
         </p>
       </div>
-    </div>
+    </article>
   </div>
 </section>
 
 <!-- FORMATION -->
-<section id="formation">
+<section id="formation" aria-labelledby="titre-formation">
   <div class="section-label">04 — Formation</div>
-  <h2 class="section-title">Parcours <em>académique</em></h2>
+  <h2 class="section-title" id="titre-formation">Parcours <em>académique</em></h2>
 
   <div class="edu-grid">
     <div class="edu-card reveal">
@@ -842,22 +974,22 @@
   </div>
 
   <!-- Certifications -->
-  <div style="margin-top:3rem;">
+  <div class="certifications">
     <div class="section-label">Certifications</div>
-    <div style="display:flex; flex-wrap:wrap; gap:.8rem; margin-top:1rem;">
-      <span class="tag" style="font-size:.78rem; padding:.4rem 1rem;">Soft Skills</span>
-      <span class="tag" style="font-size:.78rem; padding:.4rem 1rem;">Communication Digitale</span>
-      <span class="tag" style="font-size:.78rem; padding:.4rem 1rem;">Développement Web</span>
-      <span class="tag" style="font-size:.78rem; padding:.4rem 1rem;">Santé & IA</span>
-      <span class="tag" style="font-size:.78rem; padding:.4rem 1rem;">FlutterFlow / Supabase</span>
+    <div class="certification-list" aria-label="Liste des certifications">
+      <span class="tag">Soft Skills</span>
+      <span class="tag">Communication Digitale</span>
+      <span class="tag">Développement Web</span>
+      <span class="tag">Santé & IA</span>
+      <span class="tag">FlutterFlow / Supabase</span>
     </div>
   </div>
 </section>
 
 <!-- CONTACT -->
-<section id="contact">
+<section id="contact" aria-labelledby="titre-contact">
   <div class="section-label">05 — Contact</div>
-  <h2 class="section-title">Travaillons <em>ensemble</em></h2>
+  <h2 class="section-title" id="titre-contact">Travaillons <em>ensemble</em></h2>
 
   <div class="contact-wrapper">
     <div>
@@ -866,86 +998,102 @@
       </p>
       <div class="contact-links">
         <a class="contact-link" href="tel:+221770388294">
-          <span class="contact-icon">📞</span>
+          <span class="contact-icon" aria-hidden="true">📞</span>
           +221 77 038 82 94
         </a>
         <a class="contact-link" href="tel:+221768658655">
-          <span class="contact-icon">📱</span>
+          <span class="contact-icon" aria-hidden="true">📱</span>
           +221 76 865 86 55
         </a>
         <a class="contact-link" href="mailto:boundawnabou@gmail.com">
-          <span class="contact-icon">✉️</span>
+          <span class="contact-icon" aria-hidden="true">✉️</span>
           boundawnabou@gmail.com
         </a>
-        <a class="contact-link" href="#">
-          <span class="contact-icon">📍</span>
+        <div class="contact-link">
+          <span class="contact-icon" aria-hidden="true">📍</span>
           Cité Mbaye Jacques Diop, Rufisque 2, Dakar
-        </a>
+        </div>
       </div>
     </div>
 
-    <form class="contact-form" onsubmit="handleSubmit(event)">
+    <form class="contact-form">
       <div class="form-group">
-        <label>Votre nom</label>
-        <input type="text" placeholder="Prénom Nom" />
+        <label for="nom">Votre nom</label>
+        <input id="nom" name="nom" type="text" placeholder="Prénom Nom" autocomplete="name" required />
       </div>
       <div class="form-group">
-        <label>Email</label>
-        <input type="email" placeholder="vous@exemple.com" />
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" placeholder="vous@exemple.com" autocomplete="email" required />
       </div>
       <div class="form-group">
-        <label>Message</label>
-        <textarea placeholder="Décrivez votre projet..."></textarea>
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Décrivez votre projet..." required></textarea>
       </div>
+      <p class="form-status" aria-live="polite"></p>
       <button class="form-submit" type="submit">Envoyer le message →</button>
     </form>
   </div>
 </section>
+</main>
 
 <!-- FOOTER -->
 <footer>
-  <p>© 2025 <span>Adji Seynabou Sambe</span> · Développeuse Intégratrice Web · Dakar, Sénégal</p>
+  <p>© 2026 <span>Adji Seynabou Sambe</span> · Développeuse Intégratrice Web · Dakar, Sénégal</p>
 </footer>
 
 <script>
-  // Scroll reveal
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if(e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.12 });
-  reveals.forEach(el => observer.observe(el));
-
-  // Skill bars animate on view
   const bars = document.querySelectorAll('.skill-fill');
-  const barObs = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if(e.isIntersecting) {
-        e.target.style.animationPlayState = 'running';
-      }
-    });
-  }, { threshold: 0.5 });
-  bars.forEach(b => {
-    b.style.animationPlayState = 'paused';
-    barObs.observe(b);
-  });
 
-  // Form submit
-  function handleSubmit(e) {
-    e.preventDefault();
-    const btn = e.target.querySelector('.form-submit');
-    btn.textContent = '✓ Message envoyé !';
-    btn.style.background = '#19a8a6';
-    setTimeout(() => {
-      btn.textContent = 'Envoyer le message →';
-      btn.style.background = '';
-      e.target.reset();
-    }, 3000);
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px' });
+
+    reveals.forEach((el) => observer.observe(el));
+
+    const barObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.style.animationPlayState = 'running';
+          barObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    bars.forEach((bar) => {
+      bar.style.animationPlayState = 'paused';
+      barObserver.observe(bar);
+    });
+  } else {
+    reveals.forEach((el) => el.classList.add('visible'));
+    bars.forEach((bar) => {
+      bar.style.animation = 'none';
+      bar.style.transform = 'none';
+    });
   }
+
+  const contactForm = document.querySelector('.contact-form');
+  contactForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(contactForm);
+    const name = formData.get('nom').trim();
+    const email = formData.get('email').trim();
+    const message = formData.get('message').trim();
+    const subject = encodeURIComponent(`Nouveau message portfolio - ${name}`);
+    const body = encodeURIComponent(`${message}\n\nNom: ${name}\nEmail: ${email}`);
+    const status = contactForm.querySelector('.form-status');
+
+    window.location.href = `mailto:boundawnabou@gmail.com?subject=${subject}&body=${body}`;
+    status.textContent = "Votre application e-mail va s'ouvrir pour envoyer le message.";
+  });
 </script>
 
 </body>
