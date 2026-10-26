@@ -485,6 +485,7 @@
     .reveal { opacity:1; transform:none; }
     .js .reveal { opacity:0; transform:translateY(22px); transition:opacity .6s ease, transform .6s ease; }
     .js .reveal.visible { opacity:1; transform:none; }
+    .js .reveal.visible .skill-fill { animation-play-state:running; }
 
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -766,8 +767,27 @@
       </article>
 
       <article class="project-card reveal">
-        <div class="project-preview hopital">
+        <div class="project-preview sensante">
           <span class="project-index">02</span>
+          <div class="project-icon" aria-hidden="true">🩺</div>
+        </div>
+        <div class="project-body">
+          <div class="project-tags">
+            <span class="tag">Santé</span><span class="tag">Plateforme web</span><span class="tag">Rendez-vous médicaux</span>
+          </div>
+          <h3 class="project-title">Plateforme Web SENSANTÉ</h3>
+          <p class="project-desc">
+            Plateforme santé en ligne avec annuaire de praticiens et de structures médicales, informations pratiques et prise de rendez-vous.
+          </p>
+          <a class="project-link" href="https://sensante.net/" target="_blank" rel="noopener noreferrer">
+            Visiter la plateforme SENSANTÉ ↗
+          </a>
+        </div>
+      </article>
+
+      <article class="project-card reveal">
+        <div class="project-preview hopital">
+          <span class="project-index">03</span>
           <div class="project-icon" aria-hidden="true">🌐</div>
         </div>
         <div class="project-body">
@@ -783,7 +803,7 @@
 
       <article class="project-card reveal">
         <div class="project-preview crm">
-          <span class="project-index">03</span>
+          <span class="project-index">04</span>
           <div class="project-icon" aria-hidden="true">💼</div>
         </div>
         <div class="project-body">
@@ -799,7 +819,7 @@
 
       <article class="project-card reveal">
         <div class="project-preview sfad">
-          <span class="project-index">04</span>
+          <span class="project-index">05</span>
           <div class="project-icon" aria-hidden="true">🩺</div>
         </div>
         <div class="project-body">
@@ -815,7 +835,7 @@
 
       <article class="project-card reveal">
         <div class="project-preview ipm">
-          <span class="project-index">05</span>
+          <span class="project-index">06</span>
           <div class="project-icon" aria-hidden="true">🏥</div>
         </div>
         <div class="project-body">
@@ -831,7 +851,7 @@
 
       <article class="project-card reveal">
         <div class="project-preview soukhali">
-          <span class="project-index">06</span>
+          <span class="project-index">07</span>
           <div class="project-icon" aria-hidden="true">🛍️</div>
         </div>
         <div class="project-body">
@@ -847,7 +867,7 @@
 
       <article class="project-card reveal">
         <div class="project-preview etoiles">
-          <span class="project-index">07</span>
+          <span class="project-index">08</span>
           <div class="project-icon" aria-hidden="true">🎓</div>
         </div>
         <div class="project-body">
@@ -978,7 +998,6 @@
 <script>
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const reveals = document.querySelectorAll('.reveal');
-  const bars = document.querySelectorAll('.skill-fill');
 
   if ('IntersectionObserver' in window && !reduceMotion) {
     const observer = new IntersectionObserver((entries) => {
@@ -991,25 +1010,11 @@
     }, { threshold: 0.12, rootMargin: '0px 0px -40px' });
 
     reveals.forEach((el) => observer.observe(el));
-
-    const barObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.style.animationPlayState = 'running';
-          barObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.5 });
-
-    bars.forEach((bar) => {
-      bar.style.animationPlayState = 'paused';
-      barObserver.observe(bar);
-    });
   } else {
     reveals.forEach((el) => el.classList.add('visible'));
-    bars.forEach((bar) => {
-      bar.style.animation = 'none';
-      bar.style.transform = 'none';
+    document.querySelectorAll('.skill-fill').forEach((fill) => {
+      fill.style.animation = 'none';
+      fill.style.transform = 'none';
     });
   }
 
